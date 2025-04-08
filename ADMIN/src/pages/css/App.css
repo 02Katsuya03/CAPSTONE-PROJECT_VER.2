@@ -1,0 +1,298 @@
+/* ================================================
+Comment: Responsive card layout, popup modal, and styled elements
+Last Updated: April 5, 2025
+================================================ */
+
+/* ----------------------------
+Global Styles (Applies to All Devices)
+---------------------------- */
+body {
+  background-color: #FAFAFA;
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.title {
+  color: black;
+  text-align: center;
+  font-weight: bolder;
+  font-size: 50px;
+  text-transform: uppercase;
+}
+
+.main-container {
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.intro-text p {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.highlight {
+  color: #000080;
+  font-weight: bold;
+}
+
+/* ----------------------------
+Intro Text Card (Common Base)
+---------------------------- */
+.intro-text {
+  max-width: 800px;
+  margin: 0 auto 30px auto;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 20px 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* ----------------------------
+Card Layout Grid (Common Base)
+---------------------------- */
+.button-grid {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px; /* This applies the gap between the items */
+  width: 100%; /* Ensure the grid takes full width */
+}
+
+/* ----------------------------
+Popup Overlay & Content (All Devices)
+---------------------------- */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.popup-content {
+  background-color: #2ecc71;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 90vw;
+  max-height: 90vh;
+  min-width: 600px;
+  min-height: 400px;
+  text-align: center;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-content video {
+  max-width: 150%;
+  max-height: 200vh;
+  width: auto;
+  height: auto;
+  border-radius: 10px;
+}
+
+/* ================================================
+Desktop Styles (≥1025px)
+================================================ */
+@media (min-width: 1025px) {
+  .button-grid {
+    flex-direction: row; /* Ensure it's a row layout on larger screens */
+    gap: 100px; /* Increased gap for better spacing between buttons */
+  }
+
+  /* Card Style - Desktop */
+  .card-button {
+    background-color: #4bffa2;
+    text-decoration: none;
+    border-radius: 15px;
+    box-shadow: 0 6px 0 #bbb;
+    transition: all 0.3s ease-in-out;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+    width: 100%; /* Ensure the button takes full width of its parent container */
+    max-width: 350px; /* Maximum width for the card */
+    min-height: 350px; /* Minimum height for the card */
+    height: auto; /* Allow height to adjust based on content */
+  }
+
+  .card-button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.25);
+  }
+
+  .card-button:active {
+    transform: translateY(2px);
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+  }
+
+  .card-image {
+    width: 90%; /* Make image take up full width of the card */
+    height: auto;
+    object-fit: contain; /* Ensures image keeps its aspect ratio while resizing */
+    max-height: 150px; /* Control max height */
+    border-radius: 10px;
+    margin-bottom: 15px; /* Space between image and label */
+  }
+
+  .card-label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+  }
+}
+
+/* ================================================
+Tablet Styles (601px to 1024px)
+================================================ */
+@media (min-width: 601px) and (max-width: 1024px) {
+  .button-grid {
+    flex-direction: row; /* Maintain row layout for tablet screens */
+    gap: 25px; /* Adjust gap if necessary */
+  }
+
+  .card-button {
+    background-color: #4bffa2;
+    text-decoration: none;
+    border-radius: 15px;
+    box-shadow: 0 6px 0 #bbb;
+    transition: all 0.3s ease-in-out;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+    width: 100%; /* Ensure the button takes full width of its parent container */
+    max-width: 250px; /* Maximum width for the card */
+    min-height: 250px; /* Minimum height for the card */
+    height: auto; /* Allow height to adjust based on content */
+  }
+
+  .card-button:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  .card-button:active {
+    transform: translateY(2px);
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+  }
+
+  .card-image {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    max-height: 150px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+  }
+
+  .card-label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+  }
+
+  .title {
+    font-size: 50px;
+  }
+
+  .popup-content {
+    min-width: 500px;
+    min-height: 350px;
+  }
+}
+
+/* ================================================
+Mobile / CP Styles (≤600px)
+================================================ */
+@media (max-width: 600px) {
+  /* Button Grid for Mobile */
+  .button-grid {
+    flex-direction: column; /* Stack items in a column on mobile */
+    align-items: center; /* Align the items in the center */
+    gap: 15px; /* Space between stacked items */
+  }
+
+  .card-button {
+    background-color: #4bffa2;
+    text-decoration: none;
+    border-radius: 15px;
+    box-shadow: 0 6px 0 #bbb;
+    transition: all 0.3s ease-in-out;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+    width: 100%; /* Ensure the button takes full width of its parent container */
+    max-width: 250px; /* Maximum width for the card */
+    min-height: 250px; /* Minimum height for the card */
+    height: auto; /* Allow height to adjust based on content */
+  }
+
+  .card-button:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  .card-button:active {
+    transform: translateY(2px);
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+  }
+
+  .card-image {
+    width: 80%;
+    height: auto;
+    object-fit: contain;
+    max-height: 150px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+  }
+
+  .card-label {
+    font-size: 30px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+  }
+
+  .title {
+    font-size: 30px;
+  }
+
+  .intro-text {
+    padding: 15px 20px;
+  }
+
+  .popup-content {
+    min-width: 300px;
+    min-height: 250px;
+    padding: 15px;
+  }
+
+  .popup-content video {
+    max-width: 100%;
+    max-height: 60vh;
+  }
+}
+
