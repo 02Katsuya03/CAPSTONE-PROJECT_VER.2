@@ -1,16 +1,7 @@
-# Node modules (all subfolders)
-**/node_modules/
-
-# Environment variables file
-.env
-
-# Build output
-build/
-dist/
-
-# Logs
-*.log
-
-# IDE configurations
-.vscode/
-.idea/
+node_modules/ 
+.env 
+build/ 
+dist/ 
+*.log 
+.vscode/ 
+.idea/ 
