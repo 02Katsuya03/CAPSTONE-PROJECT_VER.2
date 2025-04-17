@@ -1,0 +1,218 @@
+/* ---------------------------- 
+Global Styles (Applies to All Devices)
+---------------------------- */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: #F5F5DC;
+  }
+  
+  /* ----------------------------
+  Register Container
+  ---------------------------- */
+  .register-container {
+    max-width: 450px;
+    margin: 50px auto;
+    padding: 40px;
+    border-radius: 15px;
+    background-color: #9cd1fa;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    position: relative;
+  }
+  
+  /* ----------------------------
+  Heading Style
+  ---------------------------- */
+  .register-container h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+    font-size: 28px;
+  }
+  
+  /* ----------------------------
+  Form Styles
+  ---------------------------- */
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .form-group {
+    position: relative;
+    width: 100%;
+  }
+  
+  .form-group input {
+    width: 100%;
+    padding: 18px 12px 6px;
+    border: 1.5px solid #666;
+    border-radius: 10px;
+    background-color: transparent;
+    font-size: 16px;
+    transition: all 0.3s ease;
+  }
+  
+  .form-group label {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: #666;
+    background-color: #9cd1fa;
+    padding: 0 6px;
+    pointer-events: none;
+    transition: 0.2s ease all;
+  }
+  
+  /* Floating effect on focus or when input has value */
+  .form-group input:focus + label,
+  .form-group input:not(:placeholder-shown) + label {
+    top: -8px;
+    left: 10px;
+    font-size: 13px;
+    color: #0077cc;
+  }
+  
+  /* ----------------------------
+  Password Toggle
+  ---------------------------- */
+  .password-group {
+    position: relative;
+  }
+  
+  .eye-icon {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 20px;
+    user-select: none;
+    color: #444;
+  }
+  
+  /* ----------------------------
+  Submit Button
+  ---------------------------- */
+  .submit-btn {
+    background-color: #0077cc;
+    color: white;
+    padding: 14px;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submit-btn:hover {
+    background-color: #005fa3;
+  }
+  
+  /* =============================
+  Back Icon Styling
+  ============================= */
+  .back-icon {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #333;
+    transition: transform 0.3s ease, color 0.3s ease;
+  }
+  
+  /* Hover and Focus Animation for Back Icon */
+  .back-icon:hover {
+    transform: translateX(-5px);
+    color: #0077cc;
+  }
+  
+  .back-icon:focus {
+    outline: none;
+    transform: scale(1.1) translateX(-5px);
+  }
+  
+  /* =============================
+  Desktop Styles (≥1025px)
+  ============================= */
+  @media (min-width: 1025px) {
+    .register-container {
+      max-width: 500px;
+      padding: 40px;
+    }
+  
+    .register-container h2 {
+      font-size: 32px;
+    }
+  
+    .submit-btn {
+      font-size: 18px;
+    }
+  }
+  
+  /* =============================
+  Tablet Styles (601px to 1024px)
+  ============================= */
+  @media (min-width: 601px) and (max-width: 1024px) {
+    .register-container {
+      margin: 40px auto;
+      padding: 25px;
+    }
+  
+    .register-container h2 {
+      font-size: 26px;
+    }
+  
+    .submit-btn {
+      font-size: 16px;
+    }
+  
+    .form-group input {
+      padding: 16px 12px 6px;
+    }
+  }
+  
+  /* =============================
+  Mobile / CP Styles (≤600px)
+  ============================= */
+  @media (max-width: 600px) {
+    .register-container {
+      margin: 30px 15px;
+      padding: 20px;
+      box-shadow: none;
+      border-radius: 10px;
+    }
+  
+    .register-container h2 {
+      font-size: 24px;
+    }
+  
+    .form-group input {
+      padding: 14px 10px 6px;
+      font-size: 14px;
+    }
+  
+    .form-group label {
+      font-size: 14px;
+    }
+  
+    .form-group input:focus + label,
+    .form-group input:not(:placeholder-shown) + label {
+      font-size: 12px;
+    }
+  
+    .submit-btn {
+      font-size: 15px;
+      padding: 12px;
+    }
+  
+    .eye-icon {
+      font-size: 18px;
+    }
+  }
+  

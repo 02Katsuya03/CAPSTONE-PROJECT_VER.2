@@ -6,23 +6,31 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
 import moment from "moment-timezone";
+import multer from 'multer';
+import path from 'path';
+import fs from 'fs';
+import axios from 'axios';
 
 // Models
 import User from "./models/User.js";
 import Admin from "./models/Admin.js";
+import chatRoutes from './routes/chat.js';
+
 
 // Load environment variables from .env
 dotenv.config();
 
-// Initialize app
 const app = express();
 
 // Middleware
 app.use(express.json()); // Body parser for JSON
+
 app.use(cors({
   origin: ["http://localhost:5173", "http://localhost:5174"], // User and Admin frontends
   credentials: true, // Allow cookies/credentials
 }));
+
+app.use(cors());
 
 // Function to get the current time in "Asia/Manila" timezone
 function getCurrentTime() {
@@ -55,79 +63,151 @@ function calculateAge(birthdate) {
   }
   return age;
 }
+app.use(express.json({ limit: '10mb' }));  // handle base64 images
 
-// User Registration Route
-app.post("/user/register", async (req, res) => {
+
+app.use('/api/chat', chatRoutes);
+// Define storage location and file naming convention
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    // Create a directory path based on the username
+    const userDir = path.join("uploads", req.body.username);
+
+    // Ensure the directory exists
+    fs.mkdirSync(userDir, { recursive: true });
+
+    // Specify the destination directory
+    cb(null, userDir);
+  },
+  filename: (req, file, cb) => {
+    // Set the file name to be unique with the current timestamp
+    cb(null, `face-${Date.now()}.jpg`);
+  }
+});
+
+// Filter to only allow image files
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith("image/")) {
+    cb(null, true);
+  } else {
+    cb(new Error("⚠️ Only image files are allowed!"), false);
+  }
+};
+
+const upload = multer({ storage, fileFilter });
+
+// User registration route
+app.post("/user/register", upload.single('faceImage'), async (req, res) => {
   try {
+    // Extract user details from the request body
     const { firstName, lastName, username, email, birthdate, password, confirmPassword } = req.body;
 
-    // Validate if the passwords match
+    // Check if the face image is provided
+    if (!req.file) {
+      return res.status(400).json({ message: "⚠️ No face image provided. Please complete the face capture before registering." });
+    }
+
+    // Check password confirmation
     if (password !== confirmPassword) return res.status(400).json({ message: "⚠️ Passwords do not match." });
 
-    // Check if the email or username already exists
+    // Check if the email or username already exists in the database
     if (await User.findOne({ email })) return res.status(400).json({ message: "⚠️ Email already in use." });
     if (await User.findOne({ username })) return res.status(400).json({ message: "⚠️ Username already taken." });
 
-    // Hash the password before saving
+    // Hash the user's password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Calculate the age based on the birthdate
+    // Calculate the user's age from their birthdate
     const age = calculateAge(birthdate);
 
-    // Create a new user instance
+    // Get the saved image path from the uploaded file
+    const imagePath = req.file.path;
+
+    // Create a new user object and save it to the database
     const newUser = new User({
       firstName,
       lastName,
       username,
       email,
       birthdate,
-      password: hashedPassword, // Store hashed password
-      age, // Save the calculated age
+      password: hashedPassword,
+      age,
+      faceImagePath: imagePath  // Save the path to the uploaded image
     });
 
-    // Save the new user to the database
+    // Save the user to the database
     await newUser.save();
 
+    // Send a success response
     res.status(201).json({ success: true, message: "✅ Registration successful!" });
   } catch (err) {
+    // Log and return an error response
     console.error("❌ Registration Error:", err);
     res.status(500).json({ success: false, message: "🚨 Internal server error. Please try again later." });
   }
 });
 
-// User Login Route with JWT and Age Category
-app.post("/user/login", async (req, res) => {
+app.post("/user/verify-password", async (req, res) => {
+  const { username, password } = req.body;
+
   try {
-    const { username, password } = req.body;
     const user = await User.findOne({ username: new RegExp(`^${username}$`, "i") });
 
     if (!user) {
-      console.error("❌ Login Error: User not found:", username); // Log the error for debugging
-      return res.status(400).json({ success: false, message: "User not found!" });
+      return res.status(400).json({ success: false, message: "User not found." });
     }
 
-    // Compare entered password with hashed password in database
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      console.error("❌ Login Error: Incorrect password for user:", username); // Log the error for debugging
-      return res.status(400).json({ success: false, message: "Incorrect password!" });
+      return res.status(400).json({ success: false, message: "Incorrect password." });
     }
 
-    // Determine Age Category
+    res.json({ success: true });
+  } catch (err) {
+    console.error("Error during password verification:", err);
+    res.status(500).json({ success: false, message: "Server error during password verification." });
+  }
+});
+
+
+app.post("/user/face-login", async (req, res) => {
+  const { username, faceImage } = req.body;
+
+  try {
+    const user = await User.findOne({ username: new RegExp(`^${username}$`, "i") });
+    if (!user) return res.status(400).json({ success: false, message: "User not found." });
+
+    // Load reference image from stored base64 or file path
+    const referenceBase64 = user.faceImageBase64;
+    if (!referenceBase64) return res.status(400).json({ success: false, message: "No face data for user." });
+
+    // Use your face-api.js or CompreFace logic to compare faceImage vs referenceBase64
+    const isMatch = await compareFaces(faceImage, referenceBase64);
+
+    if (!isMatch) return res.status(400).json({ success: false, message: "Face does not match." });
+
+    // Determine age group
+    const age = user.age;
     let ageCategory = "";
-    if (user.age >= 10 && user.age <= 14) ageCategory = "10-14";
-    else if (user.age >= 15 && user.age <= 18) ageCategory = "15-18";
-    else if (user.age >= 19 && user.age <= 22) ageCategory = "19-22";
-    else if (user.age >= 23) ageCategory = "23-above";
+    if (age >= 10 && age <= 14) ageCategory = "10-14";
+    else if (age >= 15 && age <= 18) ageCategory = "15-18";
+    else if (age >= 19 && age <= 22) ageCategory = "19-22";
+    else ageCategory = "23-above";
 
-    // Generate JWT Token
-    const token = jwt.sign({ id: user._id, username: user.username }, process.env.JWT_SECRET, { expiresIn: "1h" });
+    // Mock JWT or token generation
+    const token = `fake-jwt-token-for-${username}`;
 
-    console.log(getCurrentTime(), "✅ User logged in:", username);
-    res.json({ success: true, message: "Login Successful!", ageCategory, token });
-  } catch (error) {
-    console.error(getCurrentTime(), "❌ Login Error:", error); // Log the error details for debugging
-    res.status(500).json({ success: false, message: "Server error" });
+    res.json({
+      success: true,
+      message: "Face verified successfully.",
+      username,
+      ageCategory,
+      token,
+    });
+
+  } catch (err) {
+    console.error("Face login error:", err);
+    res.status(500).json({ success: false, message: "Server error during face login." });
   }
 });
 
@@ -208,6 +288,7 @@ app.post("/password/forgot-password", async (req, res) => {
     res.status(500).json({ success: false, message: "🚨 Unable to send reset email. Please try again later." });
   }
 });
+
 app.post("/password/reset-password", async (req, res) => {
   try {
     const { token, newPassword, type } = req.body;
@@ -261,9 +342,13 @@ const MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/yourdb"; /
 mongoose.connect(MONGO_URI)
   .then(() => {
     console.log(getCurrentTime(), "✅ Successfully connected to MongoDB.");
-    app.listen(PORT, () => {
-      console.log(getCurrentTime(), `🚀 Server is now running at http://localhost:${PORT}`);
+
+    app.listen(PORT, "0.0.0.0", () => {
+      console.log(getCurrentTime(), `🚀 Server is now running and accessible at:`);
+      console.log(`   🌐 Local:     http://localhost:${PORT}`);
+      console.log(`   🌐 Network:   http://0.0.0.0:${PORT}`);
     });
+
   })
   .catch((err) => {
     console.error(getCurrentTime(), "❌ Failed to connect to MongoDB:", err);
