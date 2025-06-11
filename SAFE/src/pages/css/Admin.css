@@ -1,0 +1,246 @@
+.admin-wrapper {
+  display: flex;
+  height: 100vh;
+  background-color: #f4f6f9;
+}
+
+/* Sidebar */
+.sidebar1 {
+  width: 250px;
+  background-color: #ff6663;
+  color: white;
+  transition: transform 0.3s ease;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  z-index: 1000;
+}
+
+.sidebar1.closed {
+  transform: translateX(-100%);
+}
+
+.sidebar-content {
+  padding: 1rem;
+}
+
+.sidebar-content h2 {
+  margin-bottom: 1rem;
+}
+
+.sidebar-content h3 {
+  font-size: 1.5rem;
+  color: #0B3954;
+  margin: 0;
+  margin-left: 80px;
+  font-weight: bold;
+}
+
+.sidebar-underline {
+  width: 220px;
+  height: 4px;
+  background-color: #333;
+  border-radius: 10px;
+  margin-top: 8px; /* space between text and underline */
+  margin-bottom: 20px;
+}
+
+
+/* Remove padding/margin from ul and li */
+.sidebar-content ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sidebar-content li {
+  margin: 0;
+  padding: 0;
+}
+
+/* Base link style */
+.sidebar-content a {
+  display: block;
+  width: 100%;
+  color: #0B3954;
+  text-decoration: none;
+  padding: 0.75rem 1rem;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  outline: none;
+  margin-bottom: 5px;
+}
+
+/* Hover and focus effects */
+.sidebar-content a:hover,
+.sidebar-content a:focus {
+  background-color: #0B3954;
+  color: #ff6663;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  width: 300px;
+}
+
+/* Main section (navbar + content) */
+.main-section {
+  margin-left: 250px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  transition: margin-left 0.3s ease;
+}
+
+
+.sidebar1.closed ~ .main-section {
+  margin-left: 0;
+}
+
+/* Navbar */
+.navbar {
+  height: 40px;
+  background-color: white; /* changed background to white */
+  color: #1f2d3d; /* dark text for contrast */
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  border-bottom: 1px solid #ddd; /* subtle bottom border */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* soft shadow */
+}
+
+.hamburger-icon {
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.navbar-title {
+  margin-left: 1rem;
+  font-size: 1.3rem;
+}
+
+/* Main content */
+.main-content {
+  padding: 2rem;
+  flex: 1;
+  overflow-y: auto;
+}
+
+/* Theme styles */
+.admin-wrapper.light {
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+.admin-wrapper.dark {
+  background-color: #1e1e1e;
+  color: white;
+}
+
+/* Navbar Right Side */
+.navbar-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
+}
+
+.theme-toggle {
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: white;
+}
+
+.profile-wrapper {
+  position: relative;
+}
+
+.profile-icon {
+  width: 32px;
+  height: 32px;
+  background-color: white;
+  color: #333;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* Add this to your Admin.css file */
+
+.profile-wrapper {
+  position: relative;
+}
+
+.profile-icon {
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  display: none;
+  background-color: #fff;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  width: 180px;
+  z-index: 1000;
+  padding: 10px;
+}
+
+.profile-wrapper:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dropdown-menu ul li {
+  padding: 8px;
+}
+
+.dropdown-menu ul li a {
+  text-decoration: none;
+  color: #333;
+  display: block;
+}
+
+.dropdown-menu ul li a:hover {
+  background-color: #f1f1f1;
+}
+
+.profile-avatar {
+  font-size: 40px;
+  margin-right: 10px;
+}
+
+/* Navbar Search Container (optional, for layout control) */
+.navbar-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.custom-logout-link {
+  display: block;
+  width: 100%;
+  color: #333;
+  text-decoration: none;
+  padding: 10px 15px;
+  transition: background 0.2s ease;
+}
+
+.custom-logout-link:hover {
+  background: #f0f0f0;
+  color: #000;
+}
+

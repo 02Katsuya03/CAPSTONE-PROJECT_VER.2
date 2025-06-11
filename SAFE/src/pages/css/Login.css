@@ -1,0 +1,212 @@
+/* Parent wrapper to center the login box */
+.login-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full vertical height */
+}
+
+/* Login Container */
+.login-container {
+    max-width: 400px;
+    width: 100%;
+    background: linear-gradient(to bottom, #ff6663 0%, #aee5ff 100%);
+    padding: 40px 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    text-align: center;
+    border: 2px solid black;
+}
+
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label {
+    top: -12px;
+    left: 12px;
+    font-size: 13px;
+    font-weight: bold;
+    color: #333;
+    background: #ff6663;
+    border: 1px solid #333;
+    transition: all 0.3s ease;
+    border-radius: 5px;
+
+}
+
+.input-group > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+    margin-left: calc(var(--bs-border-width) * -1);
+    border-radius: 5px;
+}
+
+/* Title */
+.login-container h2 {
+    margin-bottom: 25px;
+    color: #333;
+}
+
+/* Input Group with floating label */
+.input-group {
+    position: relative;
+    margin-bottom: 25px;
+}
+
+/* Input style */
+.input-group input {
+    width: 100%;
+    padding: 14px 15px 14px 15px;
+    border: 1px solid black;
+    font-size: 16px;
+    outline: none;
+    box-sizing: border-box;
+    background: white;
+    position: relative;
+}
+
+/* Label style */
+.input-group label {
+    position: absolute;
+    left: 15px;
+    top: 14px;
+    background-color: white;
+    color: black;
+    font-size: 16px;
+    padding: 0 4px;
+    transition: 0.3s ease;
+}
+
+/* Password Eye Icon */
+.toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 14px;
+    cursor: pointer;
+    font-size: 20px;
+    color: black;
+}
+
+/* Options: remember me and forgot */
+.options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: #555;
+}
+
+.options label {
+    display: flex;
+    align-items: center;
+}
+
+.options input[type="checkbox"] {
+    margin-right: 6px;
+}
+
+/* Submit Button */
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #0B3954;
+    color: #ff6663;
+    font-weight: bold;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-transform: uppercase;   /* Converts all letters to capital (capslock) */
+    letter-spacing: 2px; 
+}
+
+button:hover {
+    background-color: #ff6663;
+    color: #333;
+}
+.forgot-link {
+    color: #0B3954;
+    text-decoration: none;
+    padding: 2px 6px; /* Make space consistent */
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.forgot-link:hover {
+    color: #ff6663;
+    background-color: #0B3954;
+}
+
+.register-link a {
+    color: #0B3954;
+    text-decoration: none;
+    margin-left: 5px;
+    padding: 2px 6px; /* Match hover padding */
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    display: inline-block;
+    margin-top: 20px;
+}
+
+.register-link a:hover {
+    color: #ff6663;
+    background-color: #0B3954;
+}
+
+/* src/pages/css/Login.css */
+
+/* ... existing styles ... */
+
+.social-buttons {
+    display: flex;
+    flex-direction: column; /* Stack buttons vertically */
+    gap: 15px; /* Space between buttons */
+    margin-top: 20px;
+}
+
+.google-button,
+.facebook-button {
+    width: 100%; /* Make buttons full width */
+    padding: 12px 15px;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px; /* Space between icon and text */
+    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.google-button {
+    background-color: #4285F4; /* Google blue */
+    color: white;
+}
+
+.google-button:hover {
+    background-color: #357ae8;
+}
+
+.facebook-button {
+    background-color: #1877F2; /* Facebook blue */
+    color: white;
+}
+
+.facebook-button:hover {
+    background-color: #156ad1;
+}
+
+.google-button i,
+.facebook-button i {
+    font-size: 20px; /* Adjust icon size */
+}
+
+/* Add disabled state for buttons */
+.google-button:disabled,
+.facebook-button:disabled,
+.login-button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+    color: #666666;
+}

@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
+
+.splash-container1 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #FFFFFF; /* Red to Beige */
+  text-align: center;
+  padding: 0 20px; /* Added padding for some spacing on the sides */
+}
+
+.title1 {
+  font-family: 'Fredoka One', sans-serif;
+  font-size: 6rem;
+  font-weight: 900;
+  color: #ff6663; /* Dark blue for contrast */
+  text-shadow:
+    1px 1px 0px black,
+    -1px -1px 0px black,
+    1px -1px 0px black,
+    -1px 1px 0px black; /* Black shadow for stronger contrast */
+  letter-spacing: 3px;
+  margin-top: -30px;
+  padding: 20px;
+  animation: fadeInDown 1s ease-out forwards;
+}
+
+.intro-text1 {
+  font-size: 1.4rem;
+  animation: fadeIn 2s ease-out forwards;
+  max-width: 800px;
+  margin: 0 auto 30px auto;
+  background: #0B3954; /* Beige background */
+  padding: 0px 30px;
+  border-radius: 15px;
+  text-align: center;
+  line-height: 50px;
+  height: 50px;
+  text-transform: uppercase;
+  color: #ff6663; /* Dark blue text */
+  font-weight: bold;
+}
+
+.changing-text1 {
+  font-weight: bold;
+  color: #ff6663; /* Dark blue for changing text */
+  font-size: 1.2rem;
+  transition: opacity 0.5s ease;
+}
+
+.changing-text1 span {
+  display: block;
+  font-weight: normal;
+  font-size: 1rem;
+  color: #0B3954; /* Dark blue for subtext */
+}
+
+/* Progress bar styles */
+.progress-bar1 {
+  width: 50%;
+  height: 30px;
+  background-color: #0B3954; /* Dark blue background */
+  border-radius: 20px;
+  overflow: hidden;
+  margin-top: 30px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+  border: 2px solid #0B3954; /* Dark blue border */
+}
+
+.progress {
+  height: 100%;
+  background: linear-gradient(90deg, #FF6663, #ff9a9a); /* Red gradient */
+  width: 0%;
+  transition: width 0.3s ease-in-out;
+  border-radius: 30px;
+  animation: stripe 1s linear infinite;
+  background-size: 200% 100%;
+}
+
+@keyframes stripe {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

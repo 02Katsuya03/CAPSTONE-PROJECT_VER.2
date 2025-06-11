@@ -1,0 +1,193 @@
+/* DASHBOARD CARDS */
+.dashboard-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 20px;
+    justify-content: flex-start;
+  }
+  
+  .dashboard-card {
+    flex: 1 1 150px;
+    max-width: 160px;
+    min-height: 100px;
+    padding: 16px;
+    border-radius: 12px;
+    color: white;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  }
+  
+  .dashboard-card h3 {
+    font-size: 0.9rem;
+    margin-bottom: 6px;
+  }
+  
+  .dashboard-card p {
+    font-size: 1.4rem;
+    font-weight: 700;
+  }
+  
+  .dashboard-card.folders { background: #4e73df; }
+  .dashboard-card.modules { background: #1cc88a; }
+  .dashboard-card.photos  { background: #36b9cc; }
+  .dashboard-card.videos  { background: #f6c23e; color: #222; }
+  .dashboard-card.users   { background: #e74a3b; }
+  
+  /* DROPDOWN */
+  .dashboard-select {
+    margin: 20px 0;
+  }
+  
+  .dashboard-select select {
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+  }
+  
+  /* TABLE STYLES */
+  .dashboard-table-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 16px;
+  }
+  
+  .dashboard-table-wrapper h2 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+  
+  .dashboard-table {
+    overflow-x: auto;
+  }
+  
+  .dashboard-table table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    min-width: 600px;
+  }
+  
+  .dashboard-table th,
+  .dashboard-table td {
+    padding: 10px;
+    border: 1px solid black;
+    text-align: center;
+  }
+  
+  .dashboard-table th {
+    background-color: #f0f0f0;
+  }
+  
+  /* FOLDER SLIDESHOW */
+  .folder-slideshow {
+    margin-top: 30px;
+    position: relative;
+  }
+  
+  .folder-slideshow-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 16px;
+  }
+  
+  .folder-slideshow-wrapper h2 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+  
+  /* Buttons for scrolling */
+  .scroll-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #8DAEED;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 50%;
+    z-index: 1;
+  }
+  
+  .scroll-btn.left {
+    left: 0;
+  }
+  
+  .scroll-btn.right {
+    right: 0;
+  }
+  
+  /* Folder cards */
+  .folder-cards-container {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    scroll-behavior: smooth;
+  }
+  
+  .folder-card {
+    min-width: 200px;
+    max-width: 200px;
+    height: 340px;
+    background: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease;
+  }
+  
+  .folder-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .folder-card img {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+  }
+  
+  .folder-info {
+    padding: 12px 14px;
+    text-align: center;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .folder-info h4 {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  
+  .folder-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  .view-btn, .heart-btn {
+    flex: 1;
+    padding: 6px 10px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  .view-btn {
+    background-color: #8DAEED;
+    color: white;
+  }
+  
+  .heart-btn {
+    background-color: #f3f3f3;
+    color: #e74a3b;
+  }
+  

@@ -1,19 +1,24 @@
+// src/App.jsx
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { GoogleOAuthProvider } from "@react-oauth/google"; // ✅ Import
 import { API_BASE_URL } from "./config";
+import './i18n/i18n.js';
+import SplashScreen from "./pages/Splashscreen";
 import Home from "./pages/Home";
 import Register from "./pages/Register";
-import Instruction from "./pages/Instruction";
-import FaceCapture from "./components/FaceCapture";
-
 import Chatbot from './components/Chatbot';
 import Login from "./pages/Login";
+
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
-import Content10to14 from "./pages/contents/Content10to14";
-import Content15to18 from "./pages/contents/Content15to18";
-import Content19to22 from "./pages/contents/Content19to22";
-import Content23Above from "./pages/contents/Content23Above";
+
+import AdminBase from "./pages/ADMIN/Admin_Base";
+import AdminDashboard from "./pages/ADMIN/Admin_Dashboard";
+import AdminUser from "./pages/ADMIN/Admin_User";
+
+import UserPage from "./pages/USER/UserPage";
+import NotFound from "./components/NotFound";
 
 function App() {
   const [message, setMessage] = useState("");
@@ -26,33 +31,33 @@ function App() {
   }, []);
 
   return (
-    <Router>
-      <LastSeenHandler />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/instruction" element={<Instruction />} />
-        <Route path="/face-capture" element={<FaceCapture />} />
+    <GoogleOAuthProvider clientId="113484728861-u6nchjg1k2enidfrp1u695q7o2gns77o.apps.googleusercontent.com"> {/* ✅ Wrap your app */}
+      <Router>
+        <LastSeenHandler />
+        <Routes>
+          <Route
+            path="/"
+            element={<SplashScreen onComplete={() => window.location.href = "/home"} />}
+          />
+          <Route path="/home" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/chatbot" element={<Chatbot />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
 
-        <Route path="/chatbot" element={<Chatbot />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/admin" element={<ProtectedRoute><AdminBase /></ProtectedRoute>} />
+          <Route path="/dashboard" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+          <Route path="/user" element={<ProtectedRoute><AdminUser /></ProtectedRoute>} />
+          <Route path="/userpage" element={<ProtectedRoute><UserPage /></ProtectedRoute>} />
 
-        {/* ✅ Protected Routes: Users Must Be Logged In */}
-        <Route path="/content-10-14" element={<ProtectedRoute><Content10to14 /></ProtectedRoute>} />
-        <Route path="/content-15-18" element={<ProtectedRoute><Content15to18 /></ProtectedRoute>} />
-        <Route path="/content-19-22" element={<ProtectedRoute><Content19to22 /></ProtectedRoute>} />
-        <Route path="/content-23-above" element={<ProtectedRoute><Content23Above /></ProtectedRoute>} />
-
-        {/* ✅ Catch-All Route for Deleted Pages */}
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </Router>
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Router>
+    </GoogleOAuthProvider>
   );
 }
 
-// ✅ Save Last Seen Page
 const LastSeenHandler = () => {
   const location = useLocation();
   useEffect(() => {
@@ -61,20 +66,10 @@ const LastSeenHandler = () => {
   return null;
 };
 
-// ✅ Corrected ProtectedRoute (Only Wraps Content)
 const ProtectedRoute = ({ children }) => {
   const token = localStorage.getItem("token");
-
-  if (!token) {
-    return <Navigate to="/login" replace />;
-  }
-
-  return children;  // ✅ Only wrap content, don't add LogoutButton here
-};
-
-// ✅ Not Found Page
-const NotFound = () => {
-  return <h2>404 - Page Not Found</h2>;
+  if (!token) return <Navigate to="/login" replace />;
+  return children;
 };
 
 export default App;
